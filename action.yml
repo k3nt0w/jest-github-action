@@ -16,6 +16,10 @@ inputs:
     description: "Comment PRs with code coverage"
     required: false
     default: "true"
+  with-detail:
+      description: "Comment PRs with detail summary"
+      required: false
+      default: "false"
   changes-only:
     description: "Only run tests on changed files (over base branch)"
     required: false

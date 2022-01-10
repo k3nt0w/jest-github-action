@@ -82,6 +82,10 @@ function shouldCommentCoverage(): boolean {
   return Boolean(JSON.parse(core.getInput("coverage-comment", { required: false })))
 }
 
+function shouldCommentWithDetail(): boolean {
+  return Boolean(JSON.parse(core.getInput("with-detail", { required: false })))
+}
+
 function shouldRunOnlyChangedFiles(): boolean {
   return Boolean(JSON.parse(core.getInput("changes-only", { required: false })))
 }
@@ -118,7 +122,11 @@ export function getCoverageTable(
 function getCommentPayload(body: string) {
   const payload: Octokit.IssuesCreateCommentParams = {
     ...context.repo,
-    body,
+    body: shouldCommentWithDetail() ? body : `<details><summary>Coverage report</summary>
+    <p>
+    <pre>${body}</pre>
+    </p>
+    </details>`,
     issue_number: getPullId(),
   }
   return payload
