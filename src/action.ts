@@ -122,11 +122,11 @@ export function getCoverageTable(
 function getCommentPayload(body: string) {
   const payload: Octokit.IssuesCreateCommentParams = {
     ...context.repo,
-    body: shouldCommentWithDetail() ? body : `<details><summary>Coverage report</summary>
+    body: shouldCommentWithDetail() ? `<details><summary>Coverage report</summary>
     <p>
     <pre>${body}</pre>
     </p>
-    </details>`,
+    </details>`: body,
     issue_number: getPullId(),
   }
   return payload
